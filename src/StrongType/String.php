@@ -2,6 +2,7 @@
 
 namespace StrongType;
 
+use StrongType\Exceptions\CriticalTypeException;
 
 class String extends Type
 {
