@@ -10,7 +10,8 @@
         {
             "name": "Mario Škrlec",
             "email": "whitepostmail@gmail.com",
-            "homepage": "https://github.com/MarioLegenda/php-strong-types"
+            "homepage": "https://github.com/MarioLegenda/php-strong-types",
+            "role": "Developer"
         }
     ],
     "require": {

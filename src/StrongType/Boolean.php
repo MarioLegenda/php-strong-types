@@ -9,6 +9,7 @@ class Boolean extends Type
     private $innerBool;
 
     public function __construct($boolean) {
+        $this->typeCheck($boolean);
         $this->innerBool = $boolean;
     }
 
@@ -22,8 +23,8 @@ class Boolean extends Type
         return $this->innerBool;
     }
 
-    public function equals(Boolean $bool) {
-        if($bool->toBoolean() === $this->innerBool) {
+    public function equals(Boolean $boolean) {
+        if($boolean->toBoolean() === $this->innerBool) {
             return true;
         }
 
@@ -38,15 +39,9 @@ class Boolean extends Type
         return $boolean->toBoolean() === false;
     }
 
-    private function typeCheck($bool) {
-        if($bool !== null) {
-            if( ! is_bool($bool)) {
-                throw new CriticalTypeException("Bool: Bool() constructor called with an argument that is not a boolean. Makes sense for a Bool to receive a boolean, don't you think?");
-            }
-
-            if(empty($bool)) {
-                throw new CriticalTypeException("Bool: Bool() construct argument has to be a boolean. Don't pass '' ");
-            }
+    private function typeCheck($boolean) {
+        if( ! is_bool($boolean)) {
+            throw new CriticalTypeException("Bool: Bool() constructor called with an argument that is not a boolean. Makes sense for a Bool to receive a boolean, don't you think?");
         }
     }
 } 
