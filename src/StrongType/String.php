@@ -203,6 +203,13 @@ class String extends Type
         return true;
     }
     /**
+     * @return bool
+     */
+    public function length()
+    {
+        return ($this->innerString === '') ? strlen($this->innerString) : null;
+    }
+    /**
      * @return null
      */
     public function toString()
@@ -218,10 +225,6 @@ class String extends Type
         if ($string !== null) {
             if (!is_string($string)) {
                 throw new CriticalTypeException("String: String() constructor called with an argument that is not a string. Makes sense for a String to receive a string, don't you think?");
-            }
-
-            if (empty($string)) {
-                throw new CriticalTypeException("String: String() construct argument has to be a non-empty string. Don't pass '' ");
             }
         }
     }
