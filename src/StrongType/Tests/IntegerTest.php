@@ -1,7 +1,6 @@
 <?php
 
-namespace App\ToolsBundle\Tests\StrongType;
-
+namespace StrongType\Tests;
 
 use StrongType\Float;
 use StrongType\Integer;
@@ -26,7 +25,7 @@ class IntegerTest extends \PHPUnit_Framework_TestCase
             ->substract(new Float(10.56))
             ->toNumber();
 
-        $this->assertInstanceOf('App\\ToolsBundle\\Helpers\\StrongType\\Float', $shouldBeFloat, 'testNumberMethods(): $shouldBeFloat variable should be of type Float');
+        $this->assertInstanceOf('StrongType\\Float', $shouldBeFloat, 'testNumberMethods(): $shouldBeFloat variable should be of type Float');
         $this->assertEquals(9.98, $shouldBeFloat->toNumber(), 'testNumberMethods(): Float::toNumber() should return -5.56 but returned ' . $shouldBeFloat->toNumber());
 
     }

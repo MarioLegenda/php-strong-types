@@ -1,7 +1,6 @@
 <?php
 
-namespace App\ToolsBundle\Tests\StrongType;
-
+namespace StrongType\Tests;
 
 use StrongType\Exceptions\CriticalTypeException;
 use StrongType\String;
@@ -44,7 +43,7 @@ class StringTest extends \PHPUnit_Framework_TestCase
 
             $newString = $name->concat(new String(' je car'), true);
             $this->assertEquals('Mario Legenda je car', $newString->toString(), 'testConcatMethod(): String::concat($string, $immutable) failed');
-            $this->assertInstanceOf('App\\ToolsBundle\\Helpers\StrongType\\String', $newString, 'testConcatMethod(): String::concat($string, $immutable) if provided with $imutable = true, then should return a new string object');
+            $this->assertInstanceOf('StrongType\\String', $newString, 'testConcatMethod(): String::concat($string, $immutable) if provided with $imutable = true, then should return a new string object');
         } catch(CriticalTypeException $e) {
             $this->assertFalse(true, 'String has raised an exception with message: ' . $e->getMessage());
         }
