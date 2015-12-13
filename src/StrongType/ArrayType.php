@@ -47,6 +47,13 @@ class ArrayType extends Type implements \IteratorAggregate, \Countable
         return new \ArrayIterator($this->arrayType);
     }
     /**
+     * @return array
+     */
+    public function toArray()
+    {
+        return $this->arrayType;
+    }
+    /**
      * @param mixed $arrayType
      * @throws CriticalTypeException
      */
