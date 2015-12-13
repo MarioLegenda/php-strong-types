@@ -2,40 +2,64 @@
 
 namespace StrongType;
 
-/*
- Ako želim iterirat kroz multidimenzionalna polja, moram napravit RecursiveArrayIterator i onda s tim iteratorom napravit
- RecursiveIteratorIterator. Ako napravim RecursiveArrayIterator, on mi samo daje mogućnost da postane rekurzivan. Rekurziju moram
- napravit sam ili ga stavit u RecursiveIteratorIterator
-*/
-
 use StrongType\Exceptions\CriticalTypeException;
 
-class ArrayType implements \IteratorAggregate, \Countable
+class ArrayType extends Type implements \IteratorAggregate, \Countable
 {
+    /**
+     * @var array $arrayType
+     */
     private $arrayType;
 
-    public function __construct(array $arr) {
-        $this->arrayType = new \RecursiveArrayIterator($arr);
+    /**
+     * @param array $arrayType
+     * @throws CriticalTypeException
+     */
+    public function __construct(array $arrayType)
+    {
+        $this->typeCheck($arrayType);
+
+        $this->arrayType = $arrayType;
     }
 
-    public function getIterator() {
-        return new \RecursiveIteratorIterator($this->arrayType);
-    }
+    /**
+     * @param mixed $arrayType
+     * @throws CriticalTypeException
+     */
+    public function setType($arrayType)
+    {
+        $this->typeCheck($arrayType);
 
-    public function seek($index, $depth = null) {
+        $this->arrayType = $arrayType;
     }
-
-    public function count() {
+    /**
+     * @return int
+     */
+    public function count()
+    {
         return count($this->arrayType);
     }
+    /**
+     * @return \ArrayIterator
+     */
+    public function getIterator()
+    {
+        return new \ArrayIterator($this->arrayType);
+    }
+    /**
+     * @param mixed $arrayType
+     * @throws CriticalTypeException
+     */
+    private function typeCheck($arrayType)
+    {
+        if ($arrayType !== null) {
+            if (!is_array($arrayType)) {
+                throw new CriticalTypeException("ArrayType: ArrayType() constructor called with an argument that is not a array");
+            }
 
-    public function isEverything($expectedValue) {
-        if(is_array($expectedValue)) {
-            throw new CriticalTypeException('ArrayType::isEverything(): Argument cannot be of type array');
+            if (empty($arrayType)) {
+                throw new CriticalTypeException("String: String() construct argument has to be a non-empty array. Don't pass array() ");
+            }
         }
-
-
-
-        $rit = new \RecursiveIteratorIterator($this->arrayType);
     }
 } 
