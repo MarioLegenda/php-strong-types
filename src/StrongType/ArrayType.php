@@ -61,6 +61,14 @@ class ArrayType extends Type implements \IteratorAggregate, \Countable
     {
         return array_key_exists($key, $this->arrayType);
     }
+
+    /**
+     * @return bool
+     */
+    public function isArray()
+    {
+
+    }
     /**
      * @param mixed $arrayType
      * @throws CriticalTypeException

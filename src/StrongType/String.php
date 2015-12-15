@@ -207,7 +207,7 @@ class String extends Type
      */
     public function length()
     {
-        return ($this->innerString === '') ? strlen($this->innerString) : null;
+        return ($this->innerString !== '') ? strlen($this->innerString) : null;
     }
     /**
      * @return null
