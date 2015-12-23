@@ -4,7 +4,7 @@ namespace StrongType;
 
 use StrongType\Exceptions\CriticalTypeException;
 
-class ArrayType extends Type implements \IteratorAggregate, \Countable
+class ArrayType extends Type implements \IteratorAggregate, \Countable, \ArrayAccess
 {
     /**
      * @var array $arrayType
@@ -68,6 +68,43 @@ class ArrayType extends Type implements \IteratorAggregate, \Countable
     public function isArray()
     {
 
+    }
+    /**
+     * @param mixed $offset
+     * @param mixed $value
+     */
+    public function offsetSet($offset, $value)
+    {
+        if (!$this->offsetExists($offset)) {
+            $this->arrayType[$offset] = $value;
+        }
+    }
+    /**
+     * @param mixed $offset
+     * @return bool
+     */
+    public function offsetExists($offset)
+    {
+        return array_key_exists($offset, $this->arrayType);
+    }
+    /**
+     * @param mixed $offset
+     */
+    public function offsetUnset($offset)
+    {
+        unset($this->arrayType[$offset]);
+    }
+    /**
+     * @param mixed $offset
+     * @return null
+     */
+    public function offsetGet($offset)
+    {
+        if (!$this->offsetExists($offset)) {
+            return null;
+        }
+
+        return $this->arrayType[$offset];
     }
     /**
      * @param mixed $arrayType
