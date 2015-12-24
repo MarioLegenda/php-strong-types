@@ -10,9 +10,9 @@ class Boolean extends Type
      * @var bool $innerBool
      */
     private $innerBool;
-
     /**
      * @param $boolean
+     *
      * @throws CriticalTypeException
      */
     public function __construct($boolean)
@@ -20,9 +20,9 @@ class Boolean extends Type
         $this->typeCheck($boolean);
         $this->innerBool = $boolean;
     }
-
     /**
      * @param $type
+     *
      * @throws CriticalTypeException
      */
     public function setType($type)
@@ -31,7 +31,6 @@ class Boolean extends Type
 
         $this->innerBool = $type;
     }
-
     /**
      * @return bool
      */
@@ -39,9 +38,9 @@ class Boolean extends Type
     {
         return $this->innerBool;
     }
-
     /**
      * @param Boolean $boolean
+     *
      * @return bool
      */
     public function equals(Boolean $boolean)
@@ -52,18 +51,18 @@ class Boolean extends Type
 
         return false;
     }
-
     /**
      * @param Boolean $boolean
+     *
      * @return bool
      */
     public static function isTrue(Boolean $boolean)
     {
         return $boolean->toBoolean() === true;
     }
-
     /**
      * @param Boolean $boolean
+     *
      * @return bool
      */
     public static function isFalse(Boolean $boolean)
@@ -79,6 +78,7 @@ class Boolean extends Type
     }
     /**
      * @param $boolean
+     *
      * @throws CriticalTypeException
      */
     private function typeCheck($boolean)
