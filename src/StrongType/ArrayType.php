@@ -107,6 +107,25 @@ class ArrayType extends Type implements \IteratorAggregate, \Countable, \ArrayAc
         return $this->arrayType[$offset];
     }
     /**
+     * @param mixed $searchValue
+     * @param null|mixed $key
+     * @return bool|null
+     */
+    public function inArray($searchValue, $key = null)
+    {
+        $array = $this->arrayType;
+
+        if ($key !== null) {
+            if (!array_key_exists($key, $this->arrayType)) {
+                return null;
+            }
+
+            $array = $this->arrayType[$key];
+        }
+
+        return in_array($searchValue, $array);
+    }
+    /**
      * @param mixed $arrayType
      * @throws CriticalTypeException
      */
