@@ -70,7 +70,13 @@ class Boolean extends Type
     {
         return $boolean->toBoolean() === false;
     }
-
+    /**
+     * @return string
+     */
+    public function toString()
+    {
+        return ($this->innerBool === true) ? 'true' : 'false';
+    }
     /**
      * @param $boolean
      * @throws CriticalTypeException
