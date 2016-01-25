@@ -7,6 +7,19 @@ use StrongType\Exceptions\CriticalTypeException;
 class ArrayType extends Type implements \IteratorAggregate, \Countable, \ArrayAccess
 {
     /**
+     * TODO:
+     *
+     * - array difference in values
+     * - array difference in keys
+     *
+     */
+
+    const DIFFERENCES = 1;
+    const SIMILARITES = 2;
+
+    private $constans = array(1, 2);
+
+    /**
      * @var array $arrayType
      */
     private $arrayType;
@@ -52,22 +65,6 @@ class ArrayType extends Type implements \IteratorAggregate, \Countable, \ArrayAc
     public function toArray()
     {
         return $this->arrayType;
-    }
-    /**
-     * @param $key
-     * @return bool
-     */
-    public function keyExists($key)
-    {
-        return array_key_exists($key, $this->arrayType);
-    }
-
-    /**
-     * @return bool
-     */
-    public function isArray()
-    {
-
     }
     /**
      * @param mixed $offset
@@ -124,6 +121,75 @@ class ArrayType extends Type implements \IteratorAggregate, \Countable, \ArrayAc
         }
 
         return in_array($searchValue, $array);
+    }
+    /**
+     * @param string $glue
+     *
+     * @return string
+     *
+     * @throws CriticalTypeException
+     */
+    public function implode($glue)
+    {
+        $args = func_get_args();
+
+        unset($args[0]);
+
+        if (!is_string($glue)) {
+            throw new CriticalTypeException('ArrayType::implode() first argument has to be a string');
+        }
+
+        $inital = implode($glue, $this->arrayType);
+
+        foreach ($args as $arg) {
+            if (is_string($arg)) {
+                $inital .= $glue.$arg;
+            }
+
+            if (is_array($arg)) {
+                $imploded = implode($glue, $arg);
+
+                $inital .= $glue.$imploded;
+            }
+
+            if (is_numeric($arg)) {
+                $toString = (string) $arg;
+
+                $inital .= $glue.$toString;
+            }
+        }
+
+        return $inital;
+    }
+    /**
+     * @param string $key
+     * @return bool
+     */
+    public function keyExists($key, $returnValue = false)
+    {
+        $constant = ($returnValue === true) ? \RecursiveIteratorIterator::CHILD_FIRST : \RecursiveIteratorIterator::LEAVES_ONLY;
+
+        $iterator = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($this->arrayType), $constant);
+
+        while ($iterator->valid()) {
+            $itKey = $iterator->key();
+
+            if ($itKey === $key) {
+                return ($returnValue === true) ? $iterator->current() : true;
+            }
+
+            $iterator->next();
+        }
+
+        return true;
+    }
+    /**
+     * @param array $args
+     */
+    public function differenceInValues(array $arrayOne, array $arrayTwo)
+    {
+        $iteratorOne = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($arrayTwo), $constant);
+
     }
     /**
      * @param mixed $arrayType
