@@ -165,23 +165,11 @@ class ArrayType extends Type implements \IteratorAggregate, \Countable, \ArrayAc
      * @param string $key
      * @return bool
      */
-    public function keyExists($key, $returnValue = false)
+    public function keyExists($key, $isRecursion = false)
     {
-        $constant = ($returnValue === true) ? \RecursiveIteratorIterator::CHILD_FIRST : \RecursiveIteratorIterator::LEAVES_ONLY;
-
-        $iterator = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($this->arrayType), $constant);
-
-        while ($iterator->valid()) {
-            $itKey = $iterator->key();
-
-            if ($itKey === $key) {
-                return ($returnValue === true) ? $iterator->current() : true;
-            }
-
-            $iterator->next();
+        if (array_key_exists($key, $this->arrayType)) {
+            return true;
         }
-
-        return true;
     }
     /**
      * @param array $args
